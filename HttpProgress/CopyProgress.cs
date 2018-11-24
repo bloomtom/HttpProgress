@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace BunAPI.HttpProgress
+namespace HttpProgress
 {
     /// <summary>
     /// A DTO for the rate of a stream copy operation.

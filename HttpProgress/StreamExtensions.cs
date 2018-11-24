@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace BunAPI.HttpProgress
+namespace HttpProgress
 {
     /// <summary>
     /// Extensions for System.IO.Stream to support progress reporting on CopyToAsync.

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace BunAPI.HttpProgress
+namespace HttpProgress
 {
     /// <summary>
     /// An interface for CopyProgress.

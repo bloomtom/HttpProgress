@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using System.Net.Http;
 using System.Net;
 
-namespace BunAPI.HttpProgress
+namespace HttpProgress
 {
     /// <summary>
     /// An HttpContent which supports IProgress for send operations in an HttpClient.

@@ -5,6 +5,8 @@ VisualStudioVersion = 15.0.28010.2050
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HttpProgress", "HttpProgress\HttpProgress.csproj", "{BAA76FDF-4D03-4F35-B7E3-14B74E50891C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HttpProgressTests", "HttpProgressTests\HttpProgressTests.csproj", "{00517D5A-DBD5-44FB-86FA-18599E393BD6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{BAA76FDF-4D03-4F35-B7E3-14B74E50891C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BAA76FDF-4D03-4F35-B7E3-14B74E50891C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BAA76FDF-4D03-4F35-B7E3-14B74E50891C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{00517D5A-DBD5-44FB-86FA-18599E393BD6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{00517D5A-DBD5-44FB-86FA-18599E393BD6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{00517D5A-DBD5-44FB-86FA-18599E393BD6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{00517D5A-DBD5-44FB-86FA-18599E393BD6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

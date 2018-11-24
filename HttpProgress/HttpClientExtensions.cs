@@ -5,7 +5,7 @@ using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace BunAPI.HttpProgress
+namespace HttpProgress
 {
     /// <summary>
     /// Extensions the HttpClient class which give progress reporting support.
