@@ -18,14 +18,14 @@ namespace HttpProgress
         private readonly int bufferSize;
         private readonly long expectedContentLength;
         private bool contentConsumed;
-        private readonly IProgress<CopyProgress> progress;
+        private readonly Action<ICopyProgress> progressReport;
 
         /// <summary>
         /// Basic constructor which uses a default bufferSize and a zero expectedContentLength.
         /// </summary>
         /// <param name="content">The stream content to write.</param>
         /// <param name="progress"></param>
-        public ProgressStreamContent(Stream content, IProgress<ICopyProgress> progress) : this(content, defaultBufferSize, 0, progress) { }
+        public ProgressStreamContent(Stream content, Action<ICopyProgress> progressReport) : this(content, defaultBufferSize, 0, progressReport) { }
 
         /// <summary>
         /// Constructor which allows configuration of all parameters.
@@ -34,7 +34,7 @@ namespace HttpProgress
         /// <param name="bufferSize">The size of the buffer to allocate in bytes. Sane values are typically 4096-81920. Setting a buffer of more than ~85k is likely to degrade performance.</param>
         /// <param name="expectedContentLength">Used for progress reporting, this can be used to override the content stream length if the stream type does not provide one.</param>
         /// <param name="progress">An IProgress instance which fires every time the write buffer is cycled.</param>
-        public ProgressStreamContent(Stream content, int bufferSize, long expectedContentLength, IProgress<ICopyProgress> progress)
+        public ProgressStreamContent(Stream content, int bufferSize, long expectedContentLength, Action<ICopyProgress> progressReport)
         {
             if (bufferSize <= 0)
             {
@@ -44,7 +44,7 @@ namespace HttpProgress
             this.content = content ?? throw new ArgumentNullException("content");
             this.bufferSize = bufferSize;
             this.expectedContentLength = expectedContentLength;
-            this.progress = progress;
+            this.progressReport = progressReport;
         }
 
         /// <summary>
@@ -79,7 +79,7 @@ namespace HttpProgress
 
                         stream.Write(buffer, 0, length);
 
-                        progress.Report(new CopyProgress(totalTime.Elapsed, (int)(length * TimeSpan.TicksPerSecond / singleTime.ElapsedTicks), uploaded, size));
+                        progressReport.Invoke(new CopyProgress(totalTime.Elapsed, (int)(length * TimeSpan.TicksPerSecond / singleTime.ElapsedTicks), uploaded, size));
                         singleTime.Restart();
                     }
                 }

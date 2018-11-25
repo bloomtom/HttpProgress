@@ -28,7 +28,7 @@ namespace HttpProgress
         /// <summary>
         /// The percentage complete as a value 0-1.
         /// </summary>
-        public double PercentComplete => ExpectedBytes <= 0 ? 0 : BytesTransfered / ExpectedBytes;
+        public double PercentComplete => ExpectedBytes <= 0 ? 0 : (double)BytesTransfered / ExpectedBytes;
 
         /// <summary>
         /// Create a new CopyRate instance.
