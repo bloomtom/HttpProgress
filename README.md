@@ -1,5 +1,5 @@
 # HttpProgress
->A set of extension methods for `HttpClient` which add progress reporting.
+>A set of extension methods for `HttpClient` which adds progress reporting.
 
 HttpClient doesn't natively support progress reporting? Yes, it's true. You're expected to make your own `HttpContent` which overrides `SerializeToStreamAsync` for `PutAsync` and `PostAsync`, and you're expected to extend `GetAsync` with progress reporting in the stream copy logic. Well guess what? I've done that for you. 
 
