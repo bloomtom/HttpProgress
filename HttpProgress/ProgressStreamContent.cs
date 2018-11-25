@@ -66,7 +66,8 @@ namespace HttpProgress
                 singleTime.Start();
 
                 var buffer = new byte[bufferSize];
-                long size = content.Length > 0 ? content.Length : expectedContentLength;
+                long streamLength = content.CanSeek ? content.Length : 0;
+                long size = expectedContentLength > 0 ? expectedContentLength : streamLength;
                 long uploaded = 0;
 
                 using (content)
