@@ -14,9 +14,14 @@
     <RepositoryType>git</RepositoryType>
     <RepositoryUrl>https://github.com/bloomtom/HttpProgress</RepositoryUrl>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Version>1.0.1</Version>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DocumentationFile>bin\Debug\netstandard2.0\HttpProgress.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
     <DocumentationFile>bin\Debug\netstandard2.0\HttpProgress.xml</DocumentationFile>
   </PropertyGroup>
 

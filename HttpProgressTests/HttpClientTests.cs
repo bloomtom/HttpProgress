@@ -112,6 +112,27 @@ namespace HttpProgressTests
             }
         }
 
+        [TestMethod]
+        public async Task TestNoEvent()
+        {
+            var mockHttp = new MockHttpMessageHandler();
+            mockHttp.When(HttpMethod.Post, testPoint).With(new Func<HttpRequestMessage, bool>(x =>
+            {
+                var s = x.Content.ReadAsStreamAsync().Result;
+                Assert.AreEqual(streamLength, s.Length);
+                return true;
+            })).Respond(HttpStatusCode.OK);
+
+            Action<ICopyProgress> progress = null;
+
+            var client = new HttpClient(mockHttp);
+            using (Stream s = GenerateStream(streamLength))
+            {
+                var result = await client.PostAsync(testPoint, s, progress);
+                Assert.AreEqual(HttpStatusCode.OK, result.StatusCode);
+            }
+        }
+
         private Stream GenerateStream(int length)
         {
             byte[] bytes = new byte[length];
