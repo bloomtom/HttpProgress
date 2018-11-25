@@ -7,7 +7,7 @@ using System.Net;
 namespace HttpProgress
 {
     /// <summary>
-    /// An HttpContent which supports IProgress for send operations in an HttpClient.
+    /// An HttpContent which supports an event action for send operations in an HttpClient.
     /// Mostly lifted from a post made on SO by Bruno Zell
     /// </summary>
     public class ProgressStreamContent : HttpContent
@@ -24,7 +24,7 @@ namespace HttpProgress
         /// Basic constructor which uses a default bufferSize and a zero expectedContentLength.
         /// </summary>
         /// <param name="content">The stream content to write.</param>
-        /// <param name="progress"></param>
+        /// <param name="progressReport">An Action which fires every time the write buffer is cycled.</param>
         public ProgressStreamContent(Stream content, Action<ICopyProgress> progressReport) : this(content, defaultBufferSize, 0, progressReport) { }
 
         /// <summary>
@@ -33,7 +33,7 @@ namespace HttpProgress
         /// <param name="content">The source stream to read from.</param>
         /// <param name="bufferSize">The size of the buffer to allocate in bytes. Sane values are typically 4096-81920. Setting a buffer of more than ~85k is likely to degrade performance.</param>
         /// <param name="expectedContentLength">Used for progress reporting, this can be used to override the content stream length if the stream type does not provide one.</param>
-        /// <param name="progress">An IProgress instance which fires every time the write buffer is cycled.</param>
+        /// <param name="progressReport">An Action which fires every time the write buffer is cycled.</param>
         public ProgressStreamContent(Stream content, int bufferSize, long expectedContentLength, Action<ICopyProgress> progressReport)
         {
             if (bufferSize <= 0)
