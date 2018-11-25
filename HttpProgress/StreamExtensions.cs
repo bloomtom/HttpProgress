@@ -30,7 +30,7 @@ namespace HttpProgress
             if (!destination.CanWrite) { throw new ArgumentException("Destination stream must be writable.", "destination"); }
             if (bufferSize < 0) { throw new ArgumentOutOfRangeException(nameof(bufferSize)); }
 
-            expectedTotalBytes = expectedTotalBytes >= 0 ? source.Length : 0;
+            expectedTotalBytes = expectedTotalBytes == 0 ? (source.CanSeek ? source.Length : 0) : expectedTotalBytes;
 
             var buffer = new byte[bufferSize];
             long totalBytesRead = 0;

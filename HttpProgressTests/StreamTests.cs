@@ -13,7 +13,7 @@ namespace HttpProgressTests
         private const int bufferSize = 16384;
 
         [TestMethod]
-        public async Task TestStreamCopyAsync()
+        public async Task TestStreamCopy()
         {
             int progressEventCounter = 0;
             double percentComplete = 0;
