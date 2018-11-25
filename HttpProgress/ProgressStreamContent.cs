@@ -79,8 +79,10 @@ namespace HttpProgress
 
                         stream.Write(buffer, 0, length);
 
-                        progressReport?.Invoke(new CopyProgress(totalTime.Elapsed, (int)(length * TimeSpan.TicksPerSecond / singleTime.ElapsedTicks), uploaded, size));
+                        long singleElapsed = singleTime.ElapsedTicks;
                         singleTime.Restart();
+
+                        progressReport?.Invoke(new CopyProgress(totalTime.Elapsed, (int)(length * TimeSpan.TicksPerSecond / singleElapsed), uploaded, size));
                     }
                 }
             });
