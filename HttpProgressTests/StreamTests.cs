@@ -10,7 +10,7 @@ namespace HttpProgressTests
     public class StreamTests
     {
         private const int streamLength = 1024 * 1024 * 100;
-        private const int bufferSize = 32767;
+        private const int bufferSize = 16384;
 
         [TestMethod]
         public async Task TestStreamCopyAsync()

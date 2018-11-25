@@ -72,7 +72,7 @@ namespace HttpProgressTests
             var client = new HttpClient(mockHttp);
             using (Stream s = GenerateStream(streamLength))
             {
-                var result = await client.PutAsync(testPoint, s, 0, progress);
+                var result = await client.PutAsync(testPoint, s, progress);
 
                 Assert.AreEqual(HttpStatusCode.OK, result.StatusCode);
                 Assert.IsTrue(progressEventCounter > 0);
@@ -105,8 +105,7 @@ namespace HttpProgressTests
             var client = new HttpClient(mockHttp);
             using (Stream s = GenerateStream(streamLength))
             {
-                var result = await client.PostAsync(testPoint, s, 0, progress);
-
+                var result = await client.PostAsync(testPoint, s, progress);
                 Assert.AreEqual(HttpStatusCode.OK, result.StatusCode);
                 Assert.IsTrue(progressEventCounter > 0);
                 Assert.AreEqual(1, lastProgress);

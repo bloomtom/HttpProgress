@@ -2,6 +2,18 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+    <Company>bloomtom</Company>
+    <Product>HttpProgress</Product>
+    <Authors>bloomtom</Authors>
+    <PackageId>bloomtom.HttpProgress</PackageId>
+    <Description>Provides extension methods for HttpClient PutAsync, PostAsync and GetAsync which support a progress reporting action.</Description>
+    <Copyright>MIT</Copyright>
+    <PackageLicenseUrl>https://opensource.org/licenses/MIT</PackageLicenseUrl>
+    <PackageProjectUrl>https://github.com/bloomtom/HttpProgress</PackageProjectUrl>
+    <RepositoryType>git</RepositoryType>
+    <RepositoryUrl>https://github.com/bloomtom/HttpProgress</RepositoryUrl>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">

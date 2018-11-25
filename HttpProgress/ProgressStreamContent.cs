@@ -12,7 +12,7 @@ namespace HttpProgress
     /// </summary>
     public class ProgressStreamContent : HttpContent
     {
-        private const int defaultBufferSize = 32768;
+        private const int defaultBufferSize = 16384;
 
         private Stream content;
         private readonly int bufferSize;
