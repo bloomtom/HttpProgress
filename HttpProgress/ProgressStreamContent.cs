@@ -17,6 +17,7 @@ namespace HttpProgress
         private Stream content;
         private readonly int bufferSize;
         private readonly long expectedContentLength;
+        private readonly bool handleStreamDispose = false;
         private bool contentConsumed;
         private readonly Action<ICopyProgress> progressReport;
 
@@ -25,7 +26,8 @@ namespace HttpProgress
         /// </summary>
         /// <param name="content">The stream content to write.</param>
         /// <param name="progressReport">An Action which fires every time the write buffer is cycled.</param>
-        public ProgressStreamContent(Stream content, Action<ICopyProgress> progressReport) : this(content, defaultBufferSize, 0, progressReport) { }
+        /// <param name="handleStreamDispose">When set true, the content stream is disposed when this object is disposed.</param>
+        public ProgressStreamContent(Stream content, Action<ICopyProgress> progressReport, bool handleStreamDispose) : this(content, defaultBufferSize, 0, progressReport, handleStreamDispose) { }
 
         /// <summary>
         /// Constructor which allows configuration of all parameters.
@@ -34,7 +36,8 @@ namespace HttpProgress
         /// <param name="bufferSize">The size of the buffer to allocate in bytes. Sane values are typically 4096-81920. Setting a buffer of more than ~85k is likely to degrade performance.</param>
         /// <param name="expectedContentLength">Used for progress reporting, this can be used to override the content stream length if the stream type does not provide one.</param>
         /// <param name="progressReport">An Action which fires every time the write buffer is cycled.</param>
-        public ProgressStreamContent(Stream content, int bufferSize, long expectedContentLength, Action<ICopyProgress> progressReport)
+        /// <param name="handleStreamDispose">When set true, the content stream is disposed when this object is disposed.</param>
+        public ProgressStreamContent(Stream content, int bufferSize, long expectedContentLength, Action<ICopyProgress> progressReport, bool handleStreamDispose)
         {
             if (bufferSize <= 0)
             {
@@ -42,6 +45,7 @@ namespace HttpProgress
             }
 
             this.content = content ?? throw new ArgumentNullException("content");
+            this.handleStreamDispose = handleStreamDispose;
             this.bufferSize = bufferSize;
             this.expectedContentLength = expectedContentLength;
             this.progressReport = progressReport;
@@ -104,11 +108,11 @@ namespace HttpProgress
         }
 
         /// <summary>
-        /// Disposes the stream handled by this object.
+        /// Disposes the stream handled by this object if handleStreamDispose is true.
         /// </summary>
         protected override void Dispose(bool disposing)
         {
-            if (disposing)
+            if (disposing && handleStreamDispose)
             {
                 content.Dispose();
             }

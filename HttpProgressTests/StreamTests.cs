@@ -34,6 +34,25 @@ namespace HttpProgressTests
             Assert.AreEqual((int)Math.Ceiling((double)streamLength / bufferSize), progressEventCounter);
         }
 
+
+        [TestMethod]
+        public void TestStreamAutoDisposeFalse()
+        {
+            Stream s = GenerateStream(1);
+            var p = new ProgressStreamContent(s, new Action<ICopyProgress>((x) => { }), false);
+            p.Dispose();
+            s.Position = 0; // Stream should still be alive.
+        }
+
+        [TestMethod]
+        public void TestStreamAutoDisposeTrue()
+        {
+            Stream s = GenerateStream(1);
+            var p = new ProgressStreamContent(s, new Action<ICopyProgress>((x) => { }), true);
+            p.Dispose();
+            Assert.ThrowsException<ObjectDisposedException>(() => { s.Position = 0; });
+        }
+
         private Stream GenerateStream(int length)
         {
             byte[] bytes = new byte[length];
