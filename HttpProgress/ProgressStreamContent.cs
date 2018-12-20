@@ -34,7 +34,7 @@ namespace HttpProgress
         /// </summary>
         /// <param name="content">The source stream to read from.</param>
         /// <param name="bufferSize">The size of the buffer to allocate in bytes. Sane values are typically 4096-81920. Setting a buffer of more than ~85k is likely to degrade performance.</param>
-        /// <param name="expectedContentLength">Used for progress reporting, this can be used to override the content stream length if the stream type does not provide one.</param>
+        /// <param name="expectedContentLength">Overrides the content stream length if the stream type does not provide one. Used for progress reporting.</param>
         /// <param name="progressReport">An Action which fires every time the write buffer is cycled.</param>
         /// <param name="handleStreamDispose">When set true, the content stream is disposed when this object is disposed.</param>
         public ProgressStreamContent(Stream content, int bufferSize, long expectedContentLength, Action<ICopyProgress> progressReport, bool handleStreamDispose)
@@ -74,21 +74,18 @@ namespace HttpProgress
                 long size = expectedContentLength > 0 ? expectedContentLength : streamLength;
                 long uploaded = 0;
 
-                using (content)
+                while (true)
                 {
-                    while (true)
-                    {
-                        var length = content.Read(buffer, 0, buffer.Length);
-                        uploaded += length;
-                        if (length <= 0) { break; }
+                    var length = content.Read(buffer, 0, buffer.Length);
+                    uploaded += length;
+                    if (length <= 0) { break; }
 
-                        stream.Write(buffer, 0, length);
+                    stream.Write(buffer, 0, length);
 
-                        long singleElapsed = singleTime.ElapsedTicks;
-                        singleTime.Restart();
+                    long singleElapsed = singleTime.ElapsedTicks;
+                    singleTime.Restart();
 
-                        progressReport?.Invoke(new CopyProgress(totalTime.Elapsed, (int)(length * TimeSpan.TicksPerSecond / singleElapsed), uploaded, size));
-                    }
+                    progressReport?.Invoke(new CopyProgress(totalTime.Elapsed, (int)(length * TimeSpan.TicksPerSecond / singleElapsed), uploaded, size));
                 }
             });
         }
