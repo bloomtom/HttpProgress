@@ -74,9 +74,17 @@ namespace HttpProgressTests
             {
                 var result = await client.PutAsync(testPoint, s, false, progress);
 
+                s.Position = 0; // Should be able to do this because stream not closed yet.
                 Assert.AreEqual(HttpStatusCode.OK, result.StatusCode);
                 Assert.IsTrue(progressEventCounter > 0);
                 Assert.AreEqual(1, lastProgress);
+            }
+            using (Stream s = GenerateStream(streamLength))
+            {
+                var result = await client.PutAsync(testPoint, s, true, new Action<ICopyProgress>((x) => { }));
+
+                Assert.ThrowsException<ObjectDisposedException>(() => { s.Position = 0; });
+                Assert.AreEqual(HttpStatusCode.OK, result.StatusCode);
             }
         }
 

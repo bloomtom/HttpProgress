@@ -59,7 +59,10 @@ namespace HttpProgress
         /// <returns>The full HTTP response.</returns>
         public static async Task<HttpResponseMessage> PutAsync(this HttpClient client, string requestUri, Stream content, bool autoDisposeStream = false, Action<ICopyProgress> progressReport = null, long expectedContentLength = 0, CancellationToken cancelToken = default(CancellationToken))
         {
-            return await client.PutAsync(requestUri, new ProgressStreamContent(content, progressReport, autoDisposeStream), cancelToken);
+            using (var httpContent = new ProgressStreamContent(content, progressReport, autoDisposeStream))
+            {
+                return await client.PutAsync(requestUri, httpContent, cancelToken);
+            }
         }
 
         /// <summary>
@@ -75,7 +78,10 @@ namespace HttpProgress
         /// <returns>The full HTTP response.</returns>
         public static async Task<HttpResponseMessage> PostAsync(this HttpClient client, string requestUri, Stream content, bool autoDisposeStream = false, Action<ICopyProgress> progressReport = null, long expectedContentLength = 0, CancellationToken cancelToken = default(CancellationToken))
         {
-            return await client.PostAsync(requestUri, new ProgressStreamContent(content, progressReport, autoDisposeStream), cancelToken);
+            using (var httpContent = new ProgressStreamContent(content, progressReport, autoDisposeStream))
+            {
+                return await client.PostAsync(requestUri, httpContent, cancelToken);
+            }
         }
     }
 }
