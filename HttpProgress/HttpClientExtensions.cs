@@ -18,7 +18,7 @@ namespace HttpProgress
         /// <param name="client">Extension variable.</param>
         /// <param name="requestUri">The URI the request is sent to.</param>
         /// <param name="destination">The output stream to write the data response to.</param>
-        /// <param name="progressReport">An action which fires every time the write buffer is cycled.</param>
+        /// <param name="progressReport">A progress action which fires every time the write buffer is cycled.</param>
         /// <param name="cancelToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>The full HTTP response. Reading from the response stream is discouraged.</returns>
         public static async Task<HttpResponseMessage> GetAsync(this HttpClient client, string requestUri, Stream destination, IProgress<ICopyProgress> progressReport = null, CancellationToken cancelToken = default(CancellationToken))
@@ -52,7 +52,7 @@ namespace HttpProgress
         /// <param name="client">Extension variable.</param>
         /// <param name="requestUri">The URI the request is sent to.</param>
         /// <param name="content">The stream to write out.</param>
-        /// <param name="progressReport">An action which fires every time the write buffer is cycled.</param>
+        /// <param name="progressReport">A progress action which fires every time the write buffer is cycled.</param>
         /// <param name="expectedContentLength">Used for progress reporting, this can be used to override the content stream length if the stream type does not provide one.</param>
         /// <param name="cancelToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <param name="autoDisposeStream">When set true, the content stream is disposed automatically after being consumed.</param>
@@ -71,7 +71,7 @@ namespace HttpProgress
         /// <param name="client">Extension variable.</param>
         /// <param name="requestUri">The URI the request is sent to.</param>
         /// <param name="content">The stream to write out.</param>
-        /// <param name="progressReport">An action which fires every time the write buffer is cycled.</param>
+        /// <param name="progressReport">A progress action which fires every time the write buffer is cycled.</param>
         /// <param name="expectedContentLength">Used for progress reporting, this can be used to override the content stream length if the stream type does not provide one.</param>
         /// <param name="cancelToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <param name="autoDisposeStream">When set true, the content stream is disposed automatically after being consumed.</param>

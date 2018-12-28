@@ -25,7 +25,7 @@ namespace HttpProgress
         /// Basic constructor which uses a default bufferSize and a zero expectedContentLength.
         /// </summary>
         /// <param name="content">The stream content to write.</param>
-        /// <param name="progressReport">An Action which fires every time the write buffer is cycled.</param>
+        /// <param name="progressReport">A progress action which fires every time the write buffer is cycled.</param>
         /// <param name="handleStreamDispose">When set true, the content stream is disposed when this object is disposed.</param>
         public ProgressStreamContent(Stream content, IProgress<ICopyProgress> progressReport, bool handleStreamDispose) : this(content, defaultBufferSize, 0, progressReport, handleStreamDispose) { }
 
@@ -35,7 +35,7 @@ namespace HttpProgress
         /// <param name="content">The source stream to read from.</param>
         /// <param name="bufferSize">The size of the buffer to allocate in bytes. Sane values are typically 4096-81920. Setting a buffer of more than ~85k is likely to degrade performance.</param>
         /// <param name="expectedContentLength">Overrides the content stream length if the stream type does not provide one. Used for progress reporting.</param>
-        /// <param name="progressReport">An Action which fires every time the write buffer is cycled.</param>
+        /// <param name="progressReport">A progress action which fires every time the write buffer is cycled.</param>
         /// <param name="handleStreamDispose">When set true, the content stream is disposed when this object is disposed.</param>
         public ProgressStreamContent(Stream content, int bufferSize, long expectedContentLength, IProgress<ICopyProgress> progressReport, bool handleStreamDispose)
         {

@@ -19,7 +19,7 @@ namespace HttpProgress
         /// <param name="destination">The destination stream. Must support writing.</param>
         /// <param name="bufferSize">The size of the buffer to allocate in bytes. Sane values are typically 4096-81920. Setting a buffer of more than ~85k is likely to degrade performance.</param>
         /// <param name="expectedTotalBytes">The number of bytes expected. If set to greater than zero, this will override source.Length for progress calculations.</param>
-        /// <param name="progressReport">An action that will be used to report progress.</param>
+        /// <param name="progressReport">A progress action that will be used to report progress.</param>
         /// <param name="cancelToken">A typical cancellation token.</param>
         /// <returns></returns>
         public static async Task CopyToAsync(this Stream source, Stream destination, int bufferSize = 32768, long expectedTotalBytes = 0, IProgress<ICopyProgress> progressReport = null, CancellationToken cancelToken = default(CancellationToken))
