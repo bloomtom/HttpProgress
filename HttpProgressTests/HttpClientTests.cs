@@ -25,7 +25,7 @@ namespace HttpProgressTests
                 .Respond("application/octet-stream", GenerateStream(streamLength));
 
             int progressEventCounter = 0;
-            var progress = new Action<ICopyProgress>(x =>
+            var progress = new NaiveProgress<ICopyProgress>(x =>
             {
                 progressEventCounter++;
             });
@@ -61,7 +61,7 @@ namespace HttpProgressTests
             int progressEventCounter = 0;
             long lastBytesTransfered = 0;
             double lastProgress = 0;
-            var progress = new Action<ICopyProgress>(x =>
+            var progress = new NaiveProgress<ICopyProgress>(x =>
             {
                 progressEventCounter++;
                 Assert.IsTrue(x.BytesTransfered > lastBytesTransfered);
@@ -81,7 +81,7 @@ namespace HttpProgressTests
             }
             using (Stream s = GenerateStream(streamLength))
             {
-                var result = await client.PutAsync(testPoint, s, true, new Action<ICopyProgress>((x) => { }));
+                var result = await client.PutAsync(testPoint, s, true, new Progress<ICopyProgress>((x) => { }));
 
                 Assert.ThrowsException<ObjectDisposedException>(() => { s.Position = 0; });
                 Assert.AreEqual(HttpStatusCode.OK, result.StatusCode);
@@ -102,7 +102,7 @@ namespace HttpProgressTests
             int progressEventCounter = 0;
             long lastBytesTransfered = 0;
             double lastProgress = 0;
-            var progress = new Action<ICopyProgress>(x =>
+            var progress = new NaiveProgress<ICopyProgress>(x =>
             {
                 progressEventCounter++;
                 Assert.IsTrue(x.BytesTransfered > lastBytesTransfered);
@@ -131,7 +131,7 @@ namespace HttpProgressTests
                 return true;
             })).Respond(HttpStatusCode.OK);
 
-            Action<ICopyProgress> progress = null;
+            NaiveProgress<ICopyProgress> progress = null;
 
             var client = new HttpClient(mockHttp);
             using (Stream s = GenerateStream(streamLength))

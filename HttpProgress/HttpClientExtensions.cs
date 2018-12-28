@@ -21,7 +21,7 @@ namespace HttpProgress
         /// <param name="progressReport">An action which fires every time the write buffer is cycled.</param>
         /// <param name="cancelToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>The full HTTP response. Reading from the response stream is discouraged.</returns>
-        public static async Task<HttpResponseMessage> GetAsync(this HttpClient client, string requestUri, Stream destination, Action<ICopyProgress> progressReport = null, CancellationToken cancelToken = default(CancellationToken))
+        public static async Task<HttpResponseMessage> GetAsync(this HttpClient client, string requestUri, Stream destination, IProgress<ICopyProgress> progressReport = null, CancellationToken cancelToken = default(CancellationToken))
         {
             var response = await client.GetAsync(requestUri, HttpCompletionOption.ResponseHeadersRead, cancelToken);
             long contentLength = response.Content.Headers.ContentLength ?? 0;
@@ -57,7 +57,7 @@ namespace HttpProgress
         /// <param name="cancelToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <param name="autoDisposeStream">When set true, the content stream is disposed automatically after being consumed.</param>
         /// <returns>The full HTTP response.</returns>
-        public static async Task<HttpResponseMessage> PutAsync(this HttpClient client, string requestUri, Stream content, bool autoDisposeStream = false, Action<ICopyProgress> progressReport = null, long expectedContentLength = 0, CancellationToken cancelToken = default(CancellationToken))
+        public static async Task<HttpResponseMessage> PutAsync(this HttpClient client, string requestUri, Stream content, bool autoDisposeStream = false, IProgress<ICopyProgress> progressReport = null, long expectedContentLength = 0, CancellationToken cancelToken = default(CancellationToken))
         {
             using (var httpContent = new ProgressStreamContent(content, progressReport, autoDisposeStream))
             {
@@ -76,7 +76,7 @@ namespace HttpProgress
         /// <param name="cancelToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <param name="autoDisposeStream">When set true, the content stream is disposed automatically after being consumed.</param>
         /// <returns>The full HTTP response.</returns>
-        public static async Task<HttpResponseMessage> PostAsync(this HttpClient client, string requestUri, Stream content, bool autoDisposeStream = false, Action<ICopyProgress> progressReport = null, long expectedContentLength = 0, CancellationToken cancelToken = default(CancellationToken))
+        public static async Task<HttpResponseMessage> PostAsync(this HttpClient client, string requestUri, Stream content, bool autoDisposeStream = false, IProgress<ICopyProgress> progressReport = null, long expectedContentLength = 0, CancellationToken cancelToken = default(CancellationToken))
         {
             using (var httpContent = new ProgressStreamContent(content, progressReport, autoDisposeStream))
             {

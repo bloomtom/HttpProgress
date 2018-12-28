@@ -21,7 +21,7 @@ namespace HttpProgressTests
             using (var source = GenerateStream(streamLength))
             using (var destination = new MemoryStream())
             {
-                var progress = new Action<ICopyProgress>(x =>
+                var progress = new NaiveProgress<ICopyProgress>(x =>
                 {
                     progressEventCounter++;
                     Assert.IsTrue(x.PercentComplete >= percentComplete);
@@ -39,7 +39,7 @@ namespace HttpProgressTests
         public void TestStreamAutoDisposeFalse()
         {
             Stream s = GenerateStream(1);
-            var p = new ProgressStreamContent(s, new Action<ICopyProgress>((x) => { }), false);
+            var p = new ProgressStreamContent(s, new NaiveProgress<ICopyProgress>((x) => { }), false);
             p.Dispose();
             s.Position = 0; // Stream should still be alive.
         }
@@ -48,7 +48,7 @@ namespace HttpProgressTests
         public void TestStreamAutoDisposeTrue()
         {
             Stream s = GenerateStream(1);
-            var p = new ProgressStreamContent(s, new Action<ICopyProgress>((x) => { }), true);
+            var p = new ProgressStreamContent(s, new NaiveProgress<ICopyProgress>((x) => { }), true);
             p.Dispose();
             Assert.ThrowsException<ObjectDisposedException>(() => { s.Position = 0; });
         }

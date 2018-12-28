@@ -22,7 +22,7 @@ namespace HttpProgress
         /// <param name="progressReport">An action that will be used to report progress.</param>
         /// <param name="cancelToken">A typical cancellation token.</param>
         /// <returns></returns>
-        public static async Task CopyToAsync(this Stream source, Stream destination, int bufferSize = 32768, long expectedTotalBytes = 0, Action<ICopyProgress> progressReport = null, CancellationToken cancelToken = default(CancellationToken))
+        public static async Task CopyToAsync(this Stream source, Stream destination, int bufferSize = 32768, long expectedTotalBytes = 0, IProgress<ICopyProgress> progressReport = null, CancellationToken cancelToken = default(CancellationToken))
         {
             if (source == null) { throw new ArgumentNullException("source"); }
             if (!source.CanRead) { throw new ArgumentException("Source stream must be readable.", "source"); }
@@ -45,7 +45,7 @@ namespace HttpProgress
             {
                 await destination.WriteAsync(buffer, 0, bytesRead, cancelToken).ConfigureAwait(false);
                 totalBytesRead += bytesRead;
-                progressReport?.Invoke(new CopyProgress(totalTime.Elapsed, (int)(bytesRead * TimeSpan.TicksPerSecond / singleTime.ElapsedTicks), totalBytesRead, expectedTotalBytes));
+                progressReport?.Report(new CopyProgress(totalTime.Elapsed, (int)(bytesRead * TimeSpan.TicksPerSecond / singleTime.ElapsedTicks), totalBytesRead, expectedTotalBytes));
                 singleTime.Restart();
 
                 if (cancelToken.IsCancellationRequested) { break; }

@@ -19,7 +19,7 @@ namespace HttpProgress
         private readonly long expectedContentLength;
         private readonly bool handleStreamDispose = false;
         private bool contentConsumed;
-        private readonly Action<ICopyProgress> progressReport;
+        private readonly IProgress<ICopyProgress> progressReport;
 
         /// <summary>
         /// Basic constructor which uses a default bufferSize and a zero expectedContentLength.
@@ -27,7 +27,7 @@ namespace HttpProgress
         /// <param name="content">The stream content to write.</param>
         /// <param name="progressReport">An Action which fires every time the write buffer is cycled.</param>
         /// <param name="handleStreamDispose">When set true, the content stream is disposed when this object is disposed.</param>
-        public ProgressStreamContent(Stream content, Action<ICopyProgress> progressReport, bool handleStreamDispose) : this(content, defaultBufferSize, 0, progressReport, handleStreamDispose) { }
+        public ProgressStreamContent(Stream content, IProgress<ICopyProgress> progressReport, bool handleStreamDispose) : this(content, defaultBufferSize, 0, progressReport, handleStreamDispose) { }
 
         /// <summary>
         /// Constructor which allows configuration of all parameters.
@@ -37,7 +37,7 @@ namespace HttpProgress
         /// <param name="expectedContentLength">Overrides the content stream length if the stream type does not provide one. Used for progress reporting.</param>
         /// <param name="progressReport">An Action which fires every time the write buffer is cycled.</param>
         /// <param name="handleStreamDispose">When set true, the content stream is disposed when this object is disposed.</param>
-        public ProgressStreamContent(Stream content, int bufferSize, long expectedContentLength, Action<ICopyProgress> progressReport, bool handleStreamDispose)
+        public ProgressStreamContent(Stream content, int bufferSize, long expectedContentLength, IProgress<ICopyProgress> progressReport, bool handleStreamDispose)
         {
             if (bufferSize <= 0)
             {
@@ -85,7 +85,7 @@ namespace HttpProgress
                     long singleElapsed = singleTime.ElapsedTicks;
                     singleTime.Restart();
 
-                    progressReport?.Invoke(new CopyProgress(totalTime.Elapsed, (int)(length * TimeSpan.TicksPerSecond / singleElapsed), uploaded, size));
+                    progressReport?.Report(new CopyProgress(totalTime.Elapsed, (int)(length * TimeSpan.TicksPerSecond / singleElapsed), uploaded, size));
                 }
             });
         }

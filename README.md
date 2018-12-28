@@ -18,11 +18,11 @@ using HttpProgress;
 Use the `HttpClient` extensions.
 ```csharp
 // Make your progress event.
-var progress = new Action<ICopyProgress>(x =>
+var progress = new Progress<ICopyProgress>(x => // Please see "Notes on IProgress<T>"
 {
     // This is your progress event!
     // It will fire on every buffer fill so don't do anything expensive.
-    // Writing to the console is expensive, so don't do the following in practice...
+    // Writing to the console IS expensive, so don't do the following in practice...
     Console.WriteLine(x.PercentComplete.ToString("P"));
 });
 
@@ -65,8 +65,14 @@ public interface ICopyProgress
 }
 ```
 
-## Performance Considerations
+## Notes on `IProgress<T>`
 
-The action you give for progress reporting will fire on every buffer cycle. This can happen _many_ times! With a 16kB buffer transfering a 10MB file will cause 640 events to be fired. Since the event blocks the data transfer while it's running, you can seriously slow down your transfer rate by doing expensive operations in it.
+#### Concrete Implementation
+
+The type [`Progress<T>`](https://docs.microsoft.com/en-us/dotnet/api/system.progress-1) is provided by the framework for use cases where the progress changed event should be processed through your application's synchronization context. This is useful for desktop UI applications where modifying controls from the progress event needs to be done on the event loop thread. For console applications, which have no intelligent synchronization context, the event will end up on the thread pool and _will likely be executed out of order_. If this is undesirable, you can use your own implementation of `IProgress`. Doing this is very easy, and an example is provided in the unit test project class [`NaiveProgress<T>`](HttpProgressTests/NaiveProgress.cs).
+
+#### Performance Considerations
+
+The action you give for progress reporting will fire on every buffer cycle. This can happen _many_ times! With a 16kB buffer transfering a 10MB file will cause 640 events to be fired.
 
 If you need to do time consuming operations, consider rate limiting them. A simple way to do this is to only fire your expensive operation when `TransferTime` or `PercentComplete` crosses specific thresholds. A more complex but "prettier" solution is to buffer `ICopyProgress` and have a threaded reader to refresh your UI on a timer.
