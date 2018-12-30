@@ -16,7 +16,7 @@ namespace HttpProgress
         /// <summary>
         /// The instantaneous data transfer rate.
         /// </summary>
-        public int BytesPerSecond { get; private set; }
+        public long BytesPerSecond { get; private set; }
         /// <summary>
         /// The total number of bytes transfered so far.
         /// </summary>
@@ -33,7 +33,7 @@ namespace HttpProgress
         /// <summary>
         /// Create a new CopyRate instance.
         /// </summary>
-        public CopyProgress(TimeSpan totalTransferTime, int bytesPerSecond, long bytesTotal, long expectedBytes)
+        public CopyProgress(TimeSpan totalTransferTime, long bytesPerSecond, long bytesTotal, long expectedBytes)
         {
             TransferTime = totalTransferTime;
             BytesPerSecond = bytesPerSecond;

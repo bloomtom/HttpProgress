@@ -10,7 +10,7 @@ namespace HttpProgress
         /// <summary>
         /// The instantaneous data transfer rate.
         /// </summary>
-        int BytesPerSecond { get; }
+        long BytesPerSecond { get; }
         /// <summary>
         /// The total number of bytes transfered so far.
         /// </summary>

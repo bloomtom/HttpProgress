@@ -85,7 +85,7 @@ namespace HttpProgress
                     long singleElapsed = singleTime.ElapsedTicks;
                     singleTime.Restart();
 
-                    progressReport?.Report(new CopyProgress(totalTime.Elapsed, (int)(length * TimeSpan.TicksPerSecond / singleElapsed), uploaded, size));
+                    progressReport?.Report(new CopyProgress(totalTime.Elapsed, (length * TimeSpan.TicksPerSecond / singleElapsed), uploaded, size));
                 }
             });
         }
