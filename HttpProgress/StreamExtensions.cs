@@ -45,7 +45,7 @@ namespace HttpProgress
             {
                 await destination.WriteAsync(buffer, 0, bytesRead, cancelToken).ConfigureAwait(false);
                 totalBytesRead += bytesRead;
-                progressReport?.Report(new CopyProgress(totalTime.Elapsed, (int)(bytesRead * TimeSpan.TicksPerSecond / singleTime.ElapsedTicks), totalBytesRead, expectedTotalBytes));
+                progressReport?.Report(new CopyProgress(totalTime.Elapsed, bytesRead * TimeSpan.TicksPerSecond / singleTime.ElapsedTicks, totalBytesRead, expectedTotalBytes));
                 singleTime.Restart();
 
                 if (cancelToken.IsCancellationRequested) { break; }
