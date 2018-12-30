@@ -82,7 +82,7 @@ namespace HttpProgress
 
                     stream.Write(buffer, 0, length);
 
-                    long singleElapsed = singleTime.ElapsedTicks;
+                    long singleElapsed = Math.Max(1, singleTime.ElapsedTicks);
                     singleTime.Restart();
 
                     progressReport?.Report(new CopyProgress(totalTime.Elapsed, length * TimeSpan.TicksPerSecond / singleElapsed, uploaded, size));
