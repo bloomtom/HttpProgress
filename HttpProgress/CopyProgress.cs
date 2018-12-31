@@ -18,9 +18,9 @@ namespace HttpProgress
         /// </summary>
         public long BytesPerSecond { get; private set; }
         /// <summary>
-        /// The total number of bytes transfered so far.
+        /// The total number of bytes transferred so far.
         /// </summary>
-        public long BytesTransfered { get; private set; }
+        public long BytesTransferred { get; private set; }
         /// <summary>
         /// The total number of bytes expected to be copied.
         /// </summary>
@@ -28,7 +28,7 @@ namespace HttpProgress
         /// <summary>
         /// The percentage complete as a value 0-1.
         /// </summary>
-        public double PercentComplete => ExpectedBytes <= 0 ? 0 : (double)BytesTransfered / ExpectedBytes;
+        public double PercentComplete => ExpectedBytes <= 0 ? 0 : (double)BytesTransferred / ExpectedBytes;
 
         /// <summary>
         /// Create a new CopyRate instance.
@@ -37,7 +37,7 @@ namespace HttpProgress
         {
             TransferTime = totalTransferTime;
             BytesPerSecond = bytesPerSecond;
-            BytesTransfered = bytesTotal;
+            BytesTransferred = bytesTotal;
             ExpectedBytes = expectedBytes;
         }
     }

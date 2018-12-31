@@ -15,14 +15,14 @@ namespace HttpProgressTests
         {
             const int time = 2;
             const int bytesPerSecond = 100;
-            const int bytesTransfered = 500;
+            const int bytesTransferred = 500;
             const int expectedBytes = 2001;
 
-            ICopyProgress p = new CopyProgress(TimeSpan.FromSeconds(time), bytesPerSecond, bytesTransfered, expectedBytes);
-            Assert.AreEqual((double)bytesTransfered / expectedBytes, p.PercentComplete);
+            ICopyProgress p = new CopyProgress(TimeSpan.FromSeconds(time), bytesPerSecond, bytesTransferred, expectedBytes);
+            Assert.AreEqual((double)bytesTransferred / expectedBytes, p.PercentComplete);
             Assert.AreEqual(TimeSpan.FromSeconds(time), p.TransferTime);
             Assert.AreEqual(bytesPerSecond, p.BytesPerSecond);
-            Assert.AreEqual(bytesTransfered, p.BytesTransfered);
+            Assert.AreEqual(bytesTransferred, p.BytesTransferred);
             Assert.AreEqual(expectedBytes, p.ExpectedBytes);
         }
     }

@@ -59,13 +59,13 @@ namespace HttpProgressTests
             })).Respond(HttpStatusCode.OK);
 
             int progressEventCounter = 0;
-            long lastBytesTransfered = 0;
+            long lastBytesTransferred = 0;
             double lastProgress = 0;
             var progress = new NaiveProgress<ICopyProgress>(x =>
             {
                 progressEventCounter++;
-                Assert.IsTrue(x.BytesTransfered > lastBytesTransfered);
-                lastBytesTransfered = x.BytesTransfered;
+                Assert.IsTrue(x.BytesTransferred > lastBytesTransferred);
+                lastBytesTransferred = x.BytesTransferred;
                 lastProgress = x.PercentComplete;
             });
 
@@ -100,13 +100,13 @@ namespace HttpProgressTests
             })).Respond(HttpStatusCode.OK);
 
             int progressEventCounter = 0;
-            long lastBytesTransfered = 0;
+            long lastBytesTransferred = 0;
             double lastProgress = 0;
             var progress = new NaiveProgress<ICopyProgress>(x =>
             {
                 progressEventCounter++;
-                Assert.IsTrue(x.BytesTransfered > lastBytesTransfered);
-                lastBytesTransfered = x.BytesTransfered;
+                Assert.IsTrue(x.BytesTransferred > lastBytesTransferred);
+                lastBytesTransferred = x.BytesTransferred;
                 lastProgress = x.PercentComplete;
             });
 

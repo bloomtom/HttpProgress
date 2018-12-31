@@ -12,9 +12,9 @@ namespace HttpProgress
         /// </summary>
         long BytesPerSecond { get; }
         /// <summary>
-        /// The total number of bytes transfered so far.
+        /// The total number of bytes transferred so far.
         /// </summary>
-        long BytesTransfered { get; }
+        long BytesTransferred { get; }
         /// <summary>
         /// The total number of bytes expected to be copied.
         /// </summary>
