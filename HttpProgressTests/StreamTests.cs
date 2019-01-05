@@ -3,6 +3,7 @@ using HttpProgress;
 using System.IO;
 using System;
 using System.Threading.Tasks;
+using NaiveProgress;
 
 namespace HttpProgressTests
 {

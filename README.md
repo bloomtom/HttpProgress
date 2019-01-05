@@ -69,7 +69,7 @@ public interface ICopyProgress
 
 #### Concrete Implementation
 
-The type [`Progress<T>`](https://docs.microsoft.com/en-us/dotnet/api/system.progress-1) is provided by the framework for use cases where the progress changed event should be processed through your application's synchronization context. This is useful for desktop UI applications where modifying controls from the progress event needs to be done on the event loop thread. For console applications, which have no intelligent synchronization context, the event will end up on the thread pool and _will likely be executed out of order_. If this is undesirable, you can use your own implementation of `IProgress`. Doing this is very easy, and an example is provided in the unit test project class [`NaiveProgress<T>`](HttpProgressTests/NaiveProgress.cs).
+The type [`Progress<T>`](https://docs.microsoft.com/en-us/dotnet/api/system.progress-1) is provided by the framework for use cases where the progress changed event should be processed through your application's synchronization context. This is useful for desktop UI applications where modifying controls from the progress event needs to be done on the event loop thread. For console applications, which have no intelligent synchronization context, the event will end up on the thread pool and _will likely be executed out of order_. If this is undesirable, consider using [`NaiveProgress<T>`](https://github.com/bloomtom/NaiveProgress) instead.
 
 #### Performance Considerations
 
