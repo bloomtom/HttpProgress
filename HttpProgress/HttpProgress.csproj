@@ -14,9 +14,10 @@
     <RepositoryType>git</RepositoryType>
     <RepositoryUrl>https://github.com/bloomtom/HttpProgress</RepositoryUrl>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Version>2.3.0</Version>
-    <AssemblyVersion>2.3.0.0</AssemblyVersion>
-    <FileVersion>2.3.0.0</FileVersion>
+    <Version>2.3.1</Version>
+    <AssemblyVersion>2.3.1.0</AssemblyVersion>
+    <FileVersion>2.3.1.0</FileVersion>
+	<AllowedOutputExtensionsInPackageBuildOutputFolder>$(AllowedOutputExtensionsInPackageBuildOutputFolder);.pdb</AllowedOutputExtensionsInPackageBuildOutputFolder>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
